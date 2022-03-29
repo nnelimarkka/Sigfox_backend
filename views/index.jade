@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 Welcome to #{title} backend
+  p Use api calls to communicate with database
+  br
+  h2 Data from MongoDB (#{data.length} messages):
+  div(class="table-responsive")
+    table(class="table table-dark table-striped")
+      thead
+        if data.length > 0
+          tr
+            th Backend timestamp
+            th Backend ms
+            th Device 
+            th Message timestamp 
+            th Timestamp ms
+            th Message data 
+      tBody 
+        each val in data 
+          tr 
+            td= val.rTime ? moment(val.rTime).format() : "N/A"
+            td= val.rTime ? val.rTime : "N/A"
+            td= val.device
+            td= moment(val.cTime*1000).format() 
+            td= val.cTime*1000
+            td= (val.data.length == 1 && typeof(val.hex) !== 'undefined') ? val.hex : val.data
+        else 
+          p No messages found :(
